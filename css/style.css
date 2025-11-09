@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #0066FF;
+    --secondary: #00D4FF;
+    --accent: #FF00D6;
+    --bg-primary: #0a0a14;
+    --bg-secondary: #151521;
+    --text-primary: #ffffff;
+    --neural-glow: rgba(0, 102, 255, 0.6);
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body {
+    font-family: 'SF Pro Display', 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 40px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+/* ОСНОВНОЙ ЛОГОТИП */
+.logo-scene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0;
+}
+
+.logo {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    filter: drop-shadow(0 0 80px var(--neural-glow));
+}
+
+/* НЕЙРОНЫ */
+.neuron {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--primary), transparent 70%);
+    border: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    animation: neuronFloat 6s ease-in-out infinite;
+    box-shadow: 
+        0 0 30px var(--neural-glow),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.neuron::before {
+    content: attr(data-value);
+    position: absolute;
+    bottom: -25px;
+    font-size: 0.6rem;
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+.neuron-1 {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.neuron-2 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
+}
+
+.neuron-3 {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 3s;
+}
+
+.neuron-4 {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 4.5s;
+}
+
+/* СОЕДИНЕНИЯ */
+.connection {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    transform-origin: left center;
+    opacity: 0.6;
+    animation: connectionPulse 4s ease-in-out infinite;
+}
+
+.conn-1 {
+    width: 120px;
+    top: 35%;
+    left: 35%;
+    transform: rotate(45deg);
+    animation-delay: 0s;
+}
+
+.conn-2 {
+    width: 120px;
+    top: 35%;
+    left: 35%;
+    transform: rotate(-45deg);
+    animation-delay: 1s;
+}
+
+.conn-3 {
+    width: 120px;
+    top: 35%;
+    left: 35%;
+    transform: rotate(135deg);
+    animation-delay: 2s;
+}
+
+.conn-4 {
+    width: 120px;
+    top: 35%;
+    left: 35%;
+    transform: rotate(-135deg);
+    animation-delay: 3s;
+}
+
+/* ЦЕНТРАЛЬНЫЙ УЗЕЛ - БУКВА M */
+.central-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-letter {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 10;
+    text-shadow: 0 0 40px var(--neural-glow);
+    transition: var(--transition);
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: centralPulse 3s ease-out infinite;
+}
+
+/* АНИМАЦИИ */
+@keyframes neuronFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes connectionPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes centralPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+/* ИНТЕРАКТИВ */
+.neuron:hover {
+    transform: scale(1.2);
+    box-shadow: 
+        0 0 50px var(--accent),
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    animation-play-state: paused;
+}
+
+.logo:hover .m-letter {
+    transform: scale(1.1) rotate(-5deg);
+    text-shadow: 0 0 60px var(--neural-glow);
+}
+
+/* ПАНЕЛЬ ТЕМ */
+.theme-panel {
+    margin: 60px 0;
+}
+
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.theme-card {
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.theme-card:hover::before {
+    left: 100%;
+}
+
+.theme-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+}
+
+.theme-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    position: relative;
+}
+
+.quantum-preview {
+    background: conic-gradient(from 0deg, #0066FF, #00D4FF, #0066FF);
+}
+
+.matrix-preview {
+    background: conic-gradient(from 0deg, #00FF47, #00FF99, #00FF47);
+}
+
+.synth-preview {
+    background: conic-gradient(from 0deg, #FF6B00, #FF00D6, #FF6B00);
+}
+
+.cyber-preview {
+    background: conic-gradient(from 0deg, #8B00FF, #00FFFF, #8B00FF);
+}
+
+.theme-card span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.concept-explanation {
+    text-align: center;
+    max-width: 600px;
+    margin: 40px auto 0;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.concept-explanation h3 {
+    margin-bottom: 15px;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.concept-explanation p {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 768px) {
+    .logo {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .neuron {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .m-letter {
+        font-size: 3rem;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .neuron {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+    }
+    
+    .m-letter {
+        font-size: 2.5rem;
+    }
+    
+    .theme-grid {
+        grid-template-columns: 1fr;
+    }
+}
